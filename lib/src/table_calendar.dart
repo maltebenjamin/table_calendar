@@ -18,7 +18,7 @@ import 'widgets/cell_content.dart';
 
 /// Signature for `onDaySelected` callback. Contains the selected day and focused day.
 typedef OnDaySelected = void Function(
-    DateTime selectedDay, DateTime focusedDay);
+    DateTime selectedDay, DateTime focusedDay, TapDownDetails details);
 
 /// Signature for `onRangeSelected` callback.
 /// Contains start and end of the selected range, as well as currently focused day.
@@ -327,7 +327,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
-  void _onDayTapped(DateTime day) {
+  void _onDayTapped(DateTime day, TapDownDetails details) {
     final isOutside = day.month != _focusedDay.value.month;
     if (isOutside && _shouldBlockOutsideDays) {
       return;
@@ -353,7 +353,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         }
       }
     } else {
-      widget.onDaySelected?.call(day, _focusedDay.value);
+      widget.onDaySelected?.call(day, _focusedDay.value, details);
     }
   }
 
@@ -515,7 +515,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
             dayBuilder: (context, day, focusedMonth) {
               return GestureDetector(
                 behavior: widget.dayHitTestBehavior,
-                onTap: () => _onDayTapped(day),
+                onTapDown: (details) => _onDayTapped(day, details),
                 onLongPress: () => _onDayLongPressed(day),
                 child: _buildCell(day, focusedMonth),
               );
