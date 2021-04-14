@@ -18,7 +18,7 @@ import 'widgets/cell_content.dart';
 
 /// Signature for `onDaySelected` callback. Contains the selected day and focused day.
 typedef OnDaySelected = void Function(
-    DateTime selectedDay, DateTime focusedDay, [TapDownDetails? details]);
+    DateTime selectedDay, DateTime focusedDay, [TapDownDetails? detailsS, LongPressStartDetails? detailsL]);
 
 /// Signature for `onRangeSelected` callback.
 /// Contains start and end of the selected range, as well as currently focused day.
@@ -327,7 +327,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
-  void _onDayTapped(DateTime day, TapDownDetails details) {
+  void _onDayTapped(DateTime day, TapDownDetails detailsS) {
     final isOutside = day.month != _focusedDay.value.month;
     if (isOutside && _shouldBlockOutsideDays) {
       return;
@@ -353,11 +353,11 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
         }
       }
     } else {
-      widget.onDaySelected?.call(day, _focusedDay.value, details);
+      widget.onDaySelected?.call(day, _focusedDay.value, detailsS);
     }
   }
 
-  void _onDayLongPressed(DateTime day, LongPressStartDetails details) {
+  void _onDayLongPressed(DateTime day, LongPressStartDetails detailsL) {
     final isOutside = day.month != _focusedDay.value.month;
     if (isOutside && _shouldBlockOutsideDays) {
       return;
@@ -369,7 +369,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
     if (widget.onDayLongPressed != null) {
       _updateFocusOnTap(day);
-      return widget.onDayLongPressed!(day, _focusedDay.value, details);
+      return widget.onDayLongPressed!(day, _focusedDay.value, detailsL);
     }
 
     if (widget.onRangeSelected != null) {
@@ -382,7 +382,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
         } else {
           _firstSelectedDay = null;
-          widget.onDaySelected?.call(day, _focusedDay.value);
+          widget.onDaySelected?.call(day, _focusedDay.value, detailsL);
         }
       }
     }
