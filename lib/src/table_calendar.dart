@@ -357,7 +357,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
-  void _onDayLongPressed(DateTime day, TapDownDetails details) {
+  void _onDayLongPressed(DateTime day, LongPressStartDetails details) {
     final isOutside = day.month != _focusedDay.value.month;
     if (isOutside && _shouldBlockOutsideDays) {
       return;
