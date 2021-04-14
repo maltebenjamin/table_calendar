@@ -369,7 +369,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
     if (widget.onDayLongPressed != null) {
       _updateFocusOnTap(day);
-      return widget.onDayLongPressed!(day, _focusedDay.value, detailsL);
+      return widget.onDayLongPressed!(day, _focusedDay.value, null, detailsL);
     }
 
     if (widget.onRangeSelected != null) {
@@ -382,7 +382,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
         } else {
           _firstSelectedDay = null;
-          widget.onDaySelected?.call(day, _focusedDay.value, detailsL);
+          widget.onDaySelected?.call(day, _focusedDay.value, null, detailsL);
         }
       }
     }
