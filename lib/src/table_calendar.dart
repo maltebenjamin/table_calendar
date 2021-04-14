@@ -357,7 +357,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     }
   }
 
-  void _onDayLongPressed(DateTime day) {
+  void _onDayLongPressed(DateTime day, TapDownDetails details) {
     final isOutside = day.month != _focusedDay.value.month;
     if (isOutside && _shouldBlockOutsideDays) {
       return;
@@ -369,7 +369,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
     if (widget.onDayLongPressed != null) {
       _updateFocusOnTap(day);
-      return widget.onDayLongPressed!(day, _focusedDay.value);
+      return widget.onDayLongPressed!(day, _focusedDay.value, details);
     }
 
     if (widget.onRangeSelected != null) {
@@ -382,7 +382,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
         } else {
           _firstSelectedDay = null;
-          widget.onDaySelected?.call(day, _focusedDay.value);
+          widget.onDaySelected?.call(day, _focusedDay.value, details);
         }
       }
     }
@@ -516,7 +516,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
               return GestureDetector(
                 behavior: widget.dayHitTestBehavior,
                 onTapDown: (details) => _onDayTapped(day, details),
-                onLongPress: () => _onDayLongPressed(day),
+                onLongPressStart: (details) => _onDayLongPressed(day, details),
                 child: _buildCell(day, focusedMonth),
               );
             },
