@@ -18,7 +18,7 @@ import 'widgets/cell_content.dart';
 
 /// Signature for `onDaySelected` callback. Contains the selected day and focused day.
 typedef OnDaySelected = void Function(
-    DateTime selectedDay, DateTime focusedDay, TapDownDetails details);
+    DateTime selectedDay, DateTime focusedDay, [TapDownDetails? details]);
 
 /// Signature for `onRangeSelected` callback.
 /// Contains start and end of the selected range, as well as currently focused day.
@@ -382,7 +382,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
           widget.onRangeSelected!(_firstSelectedDay, null, _focusedDay.value);
         } else {
           _firstSelectedDay = null;
-          widget.onDaySelected?.call(day, _focusedDay.value, details);
+          widget.onDaySelected?.call(day, _focusedDay.value);
         }
       }
     }
